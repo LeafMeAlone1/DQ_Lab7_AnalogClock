@@ -13,7 +13,7 @@ int main(void){
 	//SET UP periferals
 	setUpClock('B');
 	init_buzzer();
-	//init_KeyPad();
+	init_KeyPad();
 	//init_Motor();
 	
 	//SET UP variables
@@ -24,11 +24,8 @@ int main(void){
 	char time[3]; // in seconds
 	time[2] = '\0';
 	int n;//number of full rotations
-	
-	buzz(1000);// testing buzz
 	 
 	
-	/*
 	while(1){
 		switch(state){
 		case 1:
@@ -78,5 +75,4 @@ int main(void){
 			break;
 		}
 	}
-	*/
 }

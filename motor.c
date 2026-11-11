@@ -9,6 +9,7 @@ unsigned char state = 0xC;
 void init_Motor()
 {
 	state = 0xC;
+	//initialize
 }
 
 void stepRight()
