@@ -14,17 +14,28 @@ int main(void){
 	setUpClock('B');
 	init_buzzer();
 	init_KeyPad();
-	//init_Motor();
+	init_Motor();
 	
 	//SET UP variables
 	int state = 1;
-	char fvalue;
-	int count;
-	int set;
-	char time[3]; // in seconds
+	char fvalue = '\0';
+	int set = 0;
+	char time[3] = {0}; // in seconds
 	time[2] = '\0';
-	int n;//number of full rotations
-	 
+	int n = 0;//number of full rotations
+	
+	
+	//buzz(100);
+	//for(int i = 0; i< 1000; i++)
+	//				stepRight();
+	//for(int i = 0; i< 1000; i++)
+	//				stepLeft(); 
+	
+	//testing key pad
+		// while(1)
+		 //{
+			// time[0]= updateKeypad();
+		 //}
 	
 	while(1){
 		switch(state){
@@ -33,21 +44,24 @@ int main(void){
 			if (fvalue == '#')
 			{
 				state = 2;
+				fvalue = '\0';
 			}else
 			{
 				fvalue = updateKeypad();
-				if (fvalue != '\0' && count < 2){
-					time[count] = fvalue;
+				if (fvalue != '\0' && fvalue != '#'){
+					char temp = time[1];
+					time[1] = fvalue;
+					time [0] = temp;
 				}
 			}
 			break;
 		case 2:
 			if (set == 0){
-				
 				// set the variable "time" from char to int;
-				int temp = atoi(time);// set the variable "time" from char to int;
+				int seconds = atoi(time);
+				if (seconds == 0) { state = 1; time[0] = '\0'; break; }
 				
-				n = (2048)/(temp * 60);
+				n = ((2048)* (seconds + 1))/60;
 				for(int i = 0; i< n; i++)
 					stepRight();
 				set = 1;
@@ -63,16 +77,17 @@ int main(void){
 			for(int i = 0; i < n; i++ )
 			{
 				stepLeft();
-				delay_ms(1000);
+				delay_us(360);
 			}
-			buzz(1000);
+			buzz(50);
 		
 			//reset state and variables
 			state = 1;
-			count = 0;
 			set = 0;
 			n = 0;
+			fvalue = '\0';
 			break;
 		}
 	}
+	
 }
