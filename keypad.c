@@ -7,19 +7,38 @@ int states[4][4] = {0};
 
 void init_KeyPad(void)
 {
-	GPIOB->MODER &= 0xFFFF0055;
-	GPIOB->MODER |= 0x00000055;
-	GPIOB->OTYPER |= 0x0000000F;//Set rows to open drain
+	//GPIOB->MODER &= 0xFFFF0055;
+	//GPIOB->MODER |= 0x00000055;
+	//GPIOB->OTYPER |= 0x0000000F;//Set rows to open drain
 	//set all rows initially to 1(which sets them to high impedenace mode); pins 0-3
-	GPIOB->ODR |= (0xF<<0);
+	//GPIOB->ODR |= (0xF<<0);
+	
+	setModer(GPIOB,0,'O');
+	setModer(GPIOB,1,'O');
+	setModer(GPIOB,2,'O');
+	setModer(GPIOB,3,'O');
+	setModer(GPIOB,4,'I');
+	setModer(GPIOB,5,'I');
+	setModer(GPIOB,6,'I');
+	setModer(GPIOB,7,'I');
+	
+	setOtyper(GPIOB,0,'O');
+	setOtyper(GPIOB,1,'O');
+	setOtyper(GPIOB,2,'O');
+	setOtyper(GPIOB,3,'O');
+	
+	setPin(GPIOB,0,1);
+	setPin(GPIOB,1,1);
+	setPin(GPIOB,2,1);
+	setPin(GPIOB,3,1);
+
+	
 }
 
 
 unsigned char updateKeypad(){
 
-	char fvals;
-		
-	//Coderun code
+		 unsigned char send = '\0';
 	
 		for(int r = 0; r<4;r++)
 		{
@@ -69,8 +88,8 @@ unsigned char updateKeypad(){
 						else
 						{
 							states[r][c] = 0;
-							fvals = values[r][c];
-							return (values[r][c]);
+							
+							send = (values[r][c]);
 						}
 					}
 		
@@ -82,6 +101,6 @@ unsigned char updateKeypad(){
 		
 		}	
 		
-	return '\0';
+	return send;
 	
 }

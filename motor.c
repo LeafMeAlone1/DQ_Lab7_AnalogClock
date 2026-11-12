@@ -2,7 +2,7 @@
 #include "motor.h"
 void setMotor(void);
 
-unsigned char state = 0xC;
+unsigned volatile char state = 0xC;
 
 
 
@@ -10,40 +10,11 @@ void init_Motor()
 {
 	state = 0xC;
 	//initialize
-}
-
-void stepRight()
-{
-	switch(state)
-	{
-		case(0x8):
-			state =0x4;
-		break;
-		case(0x4):
-			state =0x2;
-		break;
-		case(0x2):
-			state =0x1;
-		break;
-		case(0x1):
-			state =0x8;
-		break;
-		case(0xC):
-			state =0x6;
-		break;
-		case(0x6):
-			state =0x3;
-		break;
-		case(0x3):
-			state =0x9;
-		break;
-		case(0x9):
-			state =0xC;
-		break;
-		default:
-			state = 0xC;
-	}
-	setMotor();
+	setModer(GPIOB,8,'O');
+	setModer(GPIOB,9,'O');
+	setModer(GPIOB,10,'O');
+	setModer(GPIOB,11,'O');
+	
 }
 
 void stepLeft()
@@ -51,6 +22,41 @@ void stepLeft()
 	switch(state)
 	{
 		case(0x8):
+			state =0x4;
+		break;
+		case(0x4):
+			state =0x2;
+		break;
+		case(0x2):
+			state =0x1;
+		break;
+		case(0x1):
+			state =0x8;
+		break;
+		case(0xC):
+			state =0x6;
+		break;
+		case(0x6):
+			state =0x3;
+		break;
+		case(0x3):
+			state =0x9;
+		break;
+		case(0x9):
+			state =0xC;
+		break;
+		default:
+			state = 0xC;
+	}
+	setMotor();
+	delay_us(100);
+}
+
+void stepRight()
+{
+	switch(state)
+	{
+		case(0x8):
 			state =0x1;
 		break;
 		case(0x4):
@@ -78,6 +84,7 @@ void stepLeft()
 			state = 0xC;
 	}
 	setMotor();
+	delay_us(100);
 }
 
 void hstepRight()
@@ -112,6 +119,7 @@ void hstepRight()
 			state = 0xC;
 	}
 	setMotor();
+	delay_us(100);
 }
 
 void hstepLeft()
@@ -146,6 +154,7 @@ void hstepLeft()
 			state = 0xC;
 	}
 	setMotor();
+	delay_us(100);
 }
 
 void setMotor(void)
